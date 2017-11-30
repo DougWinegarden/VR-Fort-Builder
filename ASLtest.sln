@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2015
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ASLtest", "ASLtest.csproj", "{7B1CF489-EF8C-990F-76A7-A44F3E292BF8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ASLtest.Editor", "ASLtest.Editor.csproj", "{4E308D79-6690-517E-4383-3C4E9AF66077}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7B1CF489-EF8C-990F-76A7-A44F3E292BF8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7B1CF489-EF8C-990F-76A7-A44F3E292BF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7B1CF489-EF8C-990F-76A7-A44F3E292BF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7B1CF489-EF8C-990F-76A7-A44F3E292BF8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4E308D79-6690-517E-4383-3C4E9AF66077}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4E308D79-6690-517E-4383-3C4E9AF66077}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4E308D79-6690-517E-4383-3C4E9AF66077}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4E308D79-6690-517E-4383-3C4E9AF66077}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
