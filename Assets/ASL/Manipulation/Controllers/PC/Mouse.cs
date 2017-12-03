@@ -19,9 +19,8 @@ namespace ASL.Manipulation.Controllers.PC
             if (Input.GetMouseButtonDown(0))
             {
                 GameObject selectedObject = Select();
-
-                //if()
-                if (selectedObject.GetComponent<fortBuilderObj>().selectable)
+                fortBuilderObj comp = selectedObject == null ? null : selectedObject.GetComponent<fortBuilderObj>();
+                if (comp != null && comp.selectable)
                 {
                     objManager.RequestOwnership(selectedObject, PhotonNetwork.player.ID);
                     selectedObject.GetComponent<fortBuilderObj>().selected = true;
