@@ -9,8 +9,11 @@ public class fortBuilderObj : MonoBehaviour {
     public bool selectable;
     public bool selected;
 
-    private GameObject _manipulator;
     public Vector3 _previousPosition;
+
+    private GameObject _manipulator;
+    private Color primaryColor;
+    
 
     public bool IsTransformDirty
     {
@@ -36,6 +39,7 @@ public class fortBuilderObj : MonoBehaviour {
     // Use this for initialization
     void Start()
     {
+        primaryColor = GetComponent<MeshRenderer>().material.color;
         _previousPosition = this.gameObject.transform.localPosition;
     }
 
@@ -55,6 +59,24 @@ public class fortBuilderObj : MonoBehaviour {
 
     private void OnMouseDown()
     {
+        
+    }
+
+    public void DestoryManipulator()
+    {
+        if (_manipulator == null) return;
+        Destroy(_manipulator);
+        _manipulator = null;
+    }
+
+    public bool HasManipulator()
+    {
+        return _manipulator != null;
+    }
+
+    public void Select()
+    {
+        selected = true;
         if (_manipulator == null && selectable)
         {
             //_manipulator = Instantiate(Resources.Load("DirectManipulator", typeof(GameObject))) as GameObject;
@@ -65,16 +87,10 @@ public class fortBuilderObj : MonoBehaviour {
         }
     }
 
-    public void DestoryManipulator()
+    public void Deselect()
     {
-        if (_manipulator == null) return;
-        Destroy(_manipulator);
-        _manipulator = null;
-        this.gameObject.GetComponent<MeshRenderer>().material.color = Color.white;
-    }
-
-    public bool HasManipulator()
-    {
-        return _manipulator != null;
+        selected = false;
+        DestoryManipulator();
+        GetComponent<MeshRenderer>().material.color = primaryColor;
     }
 }

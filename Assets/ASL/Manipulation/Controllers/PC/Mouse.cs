@@ -23,7 +23,7 @@ namespace ASL.Manipulation.Controllers.PC
                 if (comp != null && comp.selectable)
                 {
                     objManager.RequestOwnership(selectedObject, PhotonNetwork.player.ID);
-                    selectedObject.GetComponent<fortBuilderObj>().selected = true;
+                    WorldManager.Selected = comp;
                 }
                
             }
