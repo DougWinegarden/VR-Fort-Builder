@@ -27,7 +27,7 @@ public class BuildDropdownBehavior : MonoBehaviour {
         {
             //Debug.Log("spawn 1 cube");
             string prefabName = "FortBuilderCube 1";
-            Vector3 position = new Vector3(0, 0, 2);
+            Vector3 position = new Vector3(0, 1, 0);
             Quaternion rotation = Quaternion.identity;
             objManager.Instantiate(prefabName, position, rotation);
         }
@@ -35,8 +35,8 @@ public class BuildDropdownBehavior : MonoBehaviour {
         if (buildDropdown.value == 2)
         {
             //Debug.Log("spawn 1 rect prism");
-            string prefabName = "FortBuilderRectPrism1 1";
-            Vector3 position = new Vector3(0, 0, 2);
+            string prefabName = "FBRectPrism1_3";
+            Vector3 position = new Vector3(0, 1, 0);
             Quaternion rotation = Quaternion.identity;
             objManager.Instantiate(prefabName, position, rotation);
         }
@@ -45,7 +45,7 @@ public class BuildDropdownBehavior : MonoBehaviour {
         {
             //Debug.Log("spawn 1 rect prism");
             string prefabName = "FortBuilderCylinder";
-            Vector3 position = new Vector3(0, 0, 2);
+            Vector3 position = new Vector3(0, 1, 0);
             Quaternion rotation = Quaternion.identity;
             objManager.Instantiate(prefabName, position, rotation);
         }
