@@ -34,7 +34,8 @@ namespace ASL.Manipulation.Controllers.PC
                     // select is for changing the material to highlight the selected object
                     comp.Select();
 
-                    transControl.resetSlidersForNewObject();
+                    //transControl.resetSlidersForNewObject();
+                    transControl.isDirty = true;
 
                     if (comp != previousObj)
                     {

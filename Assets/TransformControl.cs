@@ -6,6 +6,8 @@ using ASL.Manipulation.Objects;
 
 public class TransformControl : MonoBehaviour {
 
+    public bool isDirty;
+
     public GameObject focusObject;
 
     public SliderWithEcho scaleSlider;
@@ -43,6 +45,12 @@ public class TransformControl : MonoBehaviour {
     {
         if (focusObject != null)
         {
+            if (isDirty)
+            {
+                resetSlidersForNewObject();
+                isDirty = false;
+            }
+
             focusObject.transform.localScale = new Vector3(scaleSlider.GetSliderValue(),
             scaleSlider.GetSliderValue(), scaleSlider.GetSliderValue());
 
