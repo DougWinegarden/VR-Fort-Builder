@@ -19,6 +19,7 @@ namespace ASL.Manipulation.Controllers.PC
         // Update is called once per frame
         void Update()
         {
+            /*
             if (Input.GetKey(KeyCode.Q))
             {
                 MoveBehavior.Up();
@@ -85,6 +86,7 @@ namespace ASL.Manipulation.Controllers.PC
                 MoveBehavior.ScaleDown();
             }
 
+    */
 
 
             if (Input.GetKey(KeyCode.Backspace))
@@ -92,16 +94,6 @@ namespace ASL.Manipulation.Controllers.PC
                 MoveBehavior.Delete();
             }
 
-
-
-            /*
-            if (Input.GetKey(KeyCode.R))
-            {
-                //gameObject.GetComponent<CreateObject>().CreatePUNObject("Rooms/Room2/Room2");
-                string prefabName = "Rooms/Room2/Room2";
-                objManager.Instantiate(prefabName);
-            }
-            */
         }
 
         public MoveBehavior MoveBehavior

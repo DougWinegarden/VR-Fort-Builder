@@ -7,6 +7,8 @@ namespace ASL.Manipulation.Controllers.PC
 {
     public class Mouse : MonoBehaviour
     {
+        private TransformControl transControl;
+
         private ObjectInteractionManager objManager;
 
         private fortBuilderObj previousObj;
@@ -14,6 +16,8 @@ namespace ASL.Manipulation.Controllers.PC
         public void Awake()
         {
             objManager = GameObject.Find("ObjectInteractionManager").GetComponent<ObjectInteractionManager>();
+
+            transControl = GameObject.Find("MainCanvas").GetComponent<TransformControl>();
         }
 
         public void Update()
@@ -30,8 +34,11 @@ namespace ASL.Manipulation.Controllers.PC
                     // select is for changing the material to highlight the selected object
                     comp.Select();
 
-                    if(comp != previousObj)
+                    transControl.resetSlidersForNewObject();
+
+                    if (comp != previousObj)
                     {
+
                         if(previousObj != null)
                         {
                             previousObj.Deselect();
