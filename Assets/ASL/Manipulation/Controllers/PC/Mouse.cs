@@ -25,25 +25,25 @@ namespace ASL.Manipulation.Controllers.PC
             if (Input.GetMouseButtonDown(0))
             {
                 GameObject selectedObject = Select();
-                fortBuilderObj comp = selectedObject == null ? null : selectedObject.GetComponent<fortBuilderObj>();
-                if (comp != null && comp.selectable)
+                fortBuilderObj fbComponent = selectedObject == null ? null : selectedObject.GetComponent<fortBuilderObj>();
+                if (fbComponent != null && fbComponent.selectable)
                 {
                     objManager.RequestOwnership(selectedObject, PhotonNetwork.player.ID);
-                    WorldManager.Selected = comp;
+                    WorldManager.Selected = fbComponent;
 
                     // select is for changing the material to highlight the selected object
-                    comp.Select();
+                    fbComponent.Select();
 
                     //transControl.resetSlidersForNewObject();
                     transControl.isDirty = true;
 
-                    if (comp != previousObj)
+                    if (fbComponent != previousObj)
                     {
 
                         if(previousObj != null)
                         {
                             previousObj.Deselect();
-                            previousObj = comp;
+                            previousObj = fbComponent;
                         }
                         
                     }
