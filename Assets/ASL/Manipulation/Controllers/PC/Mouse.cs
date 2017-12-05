@@ -9,6 +9,8 @@ namespace ASL.Manipulation.Controllers.PC
     {
         private ObjectInteractionManager objManager;
 
+        private fortBuilderObj previousObj;
+
         public void Awake()
         {
             objManager = GameObject.Find("ObjectInteractionManager").GetComponent<ObjectInteractionManager>();
@@ -24,20 +26,43 @@ namespace ASL.Manipulation.Controllers.PC
                 {
                     objManager.RequestOwnership(selectedObject, PhotonNetwork.player.ID);
                     WorldManager.Selected = comp;
+
+                    // select is for changing the material to highlight the selected object
+                    comp.Select();
+
+                    if(comp != previousObj)
+                    {
+                        if(previousObj != null)
+                        {
+                            previousObj.Deselect();
+                            previousObj = comp;
+                        }
+                        
+                    }
                 }
+                //else
+                //{
+                //    if (previousObj != null)
+                //    {
+                //        previousObj.Deselect();
+                //        previousObj = comp;
+                //    }
+                //}
+
                
             }
-            /*
-            if (Input.GetMouseButtonDown(1))
-            {
-                //string prefabName = "Sphere";
-                string prefabName = "FortBuilderCube";
-                Vector3 position = new Vector3(0, 0, 2);
-                Quaternion rotation = Quaternion.identity;
-                objManager.Instantiate(prefabName, position, rotation);
+
+                /*
+                if (Input.GetMouseButtonDown(1))
+                {
+                    //string prefabName = "Sphere";
+                    string prefabName = "FortBuilderCube";
+                    Vector3 position = new Vector3(0, 0, 2);
+                    Quaternion rotation = Quaternion.identity;
+                    objManager.Instantiate(prefabName, position, rotation);
+                }
+                */
             }
-            */
-        }
 
         public GameObject Select()
         {

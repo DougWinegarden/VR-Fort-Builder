@@ -19,49 +19,81 @@ namespace ASL.Manipulation.Controllers.PC
         // Update is called once per frame
         void Update()
         {
-            if (Input.GetKey(KeyCode.Space))
+            if (Input.GetKey(KeyCode.Q))
             {
-                //MoveBehavior.Down();
                 MoveBehavior.Up();
             }
 
-            if (Input.GetKey(KeyCode.LeftControl))
+            if (Input.GetKey(KeyCode.E))
             {
-                //MoveBehavior.Down();
                 MoveBehavior.Down();
             }
 
-            if (Input.GetKey(KeyCode.DownArrow)
-                || Input.GetKey(KeyCode.S))
+            if (Input.GetKey(KeyCode.S))
             {
-                //MoveBehavior.Down();
                 MoveBehavior.Back();
             }
-            if(Input.GetKey(KeyCode.UpArrow)
-                || Input.GetKey(KeyCode.W))
+            if(Input.GetKey(KeyCode.W))
             {
-                //MoveBehavior.Up();
                 MoveBehavior.Forward();
             }
-            if(Input.GetKey(KeyCode.LeftArrow)
-                || Input.GetKey(KeyCode.A))
+            if(Input.GetKey(KeyCode.A))
             {
                 MoveBehavior.Left();
             }
-            if(Input.GetKey(KeyCode.RightArrow)
-                || Input.GetKey(KeyCode.D))
+            if(Input.GetKey(KeyCode.D))
             {
                 MoveBehavior.Right();
             }
-            if (Input.GetKeyDown(KeyCode.Q))
+
+
+            if (Input.GetKey(KeyCode.H))
             {
                 MoveBehavior.RotateClockwise();
             }
-            if (Input.GetKeyDown(KeyCode.E))
+            if (Input.GetKey(KeyCode.K))
             {
                 MoveBehavior.RotateCounterClockwise();
             }
-            
+
+            if (Input.GetKey(KeyCode.I))
+            {
+                MoveBehavior.RotateRight();
+            }
+            if (Input.GetKey(KeyCode.Y))
+            {
+                MoveBehavior.RotateLeft();
+            }
+
+            if (Input.GetKey(KeyCode.U))
+            {
+                MoveBehavior.RotateForward();
+            }
+            if (Input.GetKey(KeyCode.J))
+            {
+                MoveBehavior.RotateBackward();
+            }
+
+
+
+            if (Input.GetKey(KeyCode.R))
+            {
+                MoveBehavior.ScaleUp();
+            }
+            if (Input.GetKey(KeyCode.F))
+            {
+                MoveBehavior.ScaleDown();
+            }
+
+
+
+            if (Input.GetKey(KeyCode.Backspace))
+            {
+                MoveBehavior.Delete();
+            }
+
+
+
             /*
             if (Input.GetKey(KeyCode.R))
             {

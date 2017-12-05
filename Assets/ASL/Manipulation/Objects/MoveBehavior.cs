@@ -9,7 +9,9 @@ namespace ASL.Manipulation.Objects
         
         public GameObject focusObject;
         private float moveScale = 0.10f;
-        private float rotateScale = 15.0f;
+        private float rotateScale = 5.0f;
+
+        private float scaleScale = 1.05f;
 
         public virtual void Awake()
         {
@@ -21,11 +23,21 @@ namespace ASL.Manipulation.Objects
             focusObject = e.FocusObject;
         }
 
+        /*
+        public virtual void Up()
+        {
+            if (focusObject != null)
+            {
+                focusObject.transform.Translate(Vector3.up * MoveScale);
+            }
+        }
+        */
+
         public virtual void Up()
         {
             if(focusObject != null)
             {
-                focusObject.transform.Translate(Vector3.up * MoveScale);
+                focusObject.transform.Translate(Vector3.up * MoveScale, Space.World);
             }
         }
 
@@ -33,7 +45,11 @@ namespace ASL.Manipulation.Objects
         {
             if (focusObject != null)
             {
-                focusObject.transform.Translate(Vector3.down * MoveScale);
+                if(focusObject.transform.position.y >= 0.5)
+                {
+                    focusObject.transform.Translate(Vector3.down * MoveScale, Space.World);
+                }
+                
             }
         }
 
@@ -41,7 +57,10 @@ namespace ASL.Manipulation.Objects
         {
             if (focusObject != null)
             {
-                focusObject.transform.Translate(Vector3.forward * MoveScale);
+                if (focusObject.transform.position.z <= 4)
+                {
+                    focusObject.transform.Translate(Vector3.forward * MoveScale, Space.World);
+                }
             }
         }
 
@@ -49,7 +68,10 @@ namespace ASL.Manipulation.Objects
         {
             if (focusObject != null)
             {
-                focusObject.transform.Translate(-Vector3.forward * MoveScale);
+                if (focusObject.transform.position.z >= -4)
+                {
+                    focusObject.transform.Translate(-Vector3.forward * MoveScale, Space.World);
+                }
             }
         }
 
@@ -57,7 +79,10 @@ namespace ASL.Manipulation.Objects
         {
             if (focusObject != null)
             {
-                focusObject.transform.Translate(Vector3.left * MoveScale);
+                if (focusObject.transform.position.x >= -4)
+                {
+                    focusObject.transform.Translate(Vector3.left * MoveScale, Space.World);
+                }
             }
         }
 
@@ -65,15 +90,26 @@ namespace ASL.Manipulation.Objects
         {
             if (focusObject != null)
             {
-                focusObject.transform.Translate(Vector3.right * MoveScale);
+                if (focusObject.transform.position.x <= 4)
+                {
+                    focusObject.transform.Translate(Vector3.right * MoveScale, Space.World);
+                }
             }
+
         }
+
+
+
+
+
+
+
 
         public virtual void RotateClockwise()
         {
             if(focusObject != null)
             {
-                focusObject.transform.Rotate(Vector3.up, RotateScale);
+                focusObject.transform.Rotate(Vector3.up, RotateScale, Space.World);
             }
         }
 
@@ -81,9 +117,77 @@ namespace ASL.Manipulation.Objects
         {
             if(focusObject != null)
             {
-                focusObject.transform.Rotate(Vector3.up, RotateScale * -1);
+                focusObject.transform.Rotate(Vector3.up, RotateScale * -1, Space.World);
             }
         }
+
+        public virtual void RotateRight()
+        {
+            if (focusObject != null)
+            {
+                focusObject.transform.Rotate(Vector3.forward, RotateScale * -1, Space.World);
+            }
+        }
+
+        public virtual void RotateLeft()
+        {
+            if (focusObject != null)
+            {
+                focusObject.transform.Rotate(Vector3.forward, RotateScale, Space.World);
+            }
+        }
+
+
+        public virtual void RotateForward()
+        {
+            if (focusObject != null)
+            {
+                focusObject.transform.Rotate(Vector3.right, RotateScale, Space.World);
+            }
+        }
+        public virtual void RotateBackward()
+        {
+            if (focusObject != null)
+            {
+                focusObject.transform.Rotate(Vector3.right, RotateScale * -1, Space.World);
+            }
+        }
+
+
+        public virtual void ScaleUp()
+        {
+            if (focusObject != null)
+            {
+                if(focusObject.transform.localScale.magnitude <= 4)
+                {
+                    focusObject.transform.localScale *= scaleScale;
+                }
+                
+            }
+        }
+        public virtual void ScaleDown()
+        {
+            if (focusObject != null)
+            {
+                if (focusObject.transform.localScale.magnitude >= 0.5)
+                {
+                    focusObject.transform.localScale /= scaleScale;
+                }
+                
+            }
+        }
+
+
+        public virtual void Delete()
+        {
+            if (focusObject != null)
+            {
+                //focusObject.destroy();
+                Destroy(focusObject);
+            }
+        }
+
+
 
         public virtual void Drag(Vector3 deltaPosition)
         {

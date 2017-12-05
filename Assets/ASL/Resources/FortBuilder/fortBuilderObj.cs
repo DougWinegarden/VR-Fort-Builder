@@ -4,10 +4,39 @@ using UnityEngine;
 
 public class fortBuilderObj : MonoBehaviour {
 
-    public GameObject directManipulator;
+    //public GameObject directManipulator;
 
     public bool selectable;
     public bool selected;
+
+    private Material objMaterial;
+    public Material selectMaterial;
+
+    void Start()
+    {
+        objMaterial = gameObject.GetComponent<Renderer>().material;
+    }
+
+    void update()
+    {
+
+    }
+
+    public void Select()
+    {
+        selected = true;
+        gameObject.GetComponent<Renderer>().material = selectMaterial;
+
+    }
+
+    public void Deselect()
+    {
+        selected = false;
+        gameObject.GetComponent<Renderer>().material = objMaterial;
+    }
+
+
+    /*
 
     public Vector3 _previousPosition;
 
@@ -93,4 +122,6 @@ public class fortBuilderObj : MonoBehaviour {
         DestoryManipulator();
         GetComponent<MeshRenderer>().material.color = primaryColor;
     }
+
+    */
 }
