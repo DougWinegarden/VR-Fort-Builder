@@ -30,7 +30,8 @@ public class SliderWithEcho : MonoBehaviour {
     // GUI element changes the object
 	void SliderValueChange(float v)
     {
-
+        //Debug.Log("Value changed: " + v);
+        
         //GetComponentInParent<TransformControl>().updateObjectFromSliders();
         GameObject.Find("MainCanvas").GetComponent<TransformControl>().updateObjectFromSliders();
 

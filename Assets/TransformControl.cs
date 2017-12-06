@@ -6,8 +6,6 @@ using ASL.Manipulation.Objects;
 
 public class TransformControl : MonoBehaviour {
 
-    public bool isDirty;
-
     public GameObject focusObject;
 
     public SliderWithEcho scaleSlider;
@@ -27,6 +25,8 @@ public class TransformControl : MonoBehaviour {
 
     private void SetObject(ObjectSelectedEventArgs e)
     {
+        focusObject = null;
+        setSlidersToObject(e.FocusObject);
         focusObject = e.FocusObject;
     }
 
@@ -45,12 +45,6 @@ public class TransformControl : MonoBehaviour {
     {
         if (focusObject != null)
         {
-            if (isDirty)
-            {
-                resetSlidersForNewObject();
-                isDirty = false;
-            }
-
             focusObject.transform.localScale = new Vector3(scaleSlider.GetSliderValue(),
             scaleSlider.GetSliderValue(), scaleSlider.GetSliderValue());
 
@@ -67,15 +61,33 @@ public class TransformControl : MonoBehaviour {
     {
         if(focusObject != null)
         {
+            //Debug.Log(focusObject.transform);
             scaleSlider.SetSliderValue(focusObject.transform.localScale.x);
 
-            translateXSlider.SetSliderValue(focusObject.transform.position.x);
-            translateYSlider.SetSliderValue(focusObject.transform.position.y);
-            translateZSlider.SetSliderValue(focusObject.transform.position.z);
+            translateXSlider.SetSliderValue(focusObject.transform.localPosition.x);
+            translateYSlider.SetSliderValue(focusObject.transform.localPosition.y);
+            translateZSlider.SetSliderValue(focusObject.transform.localPosition.z);
 
             rotateXSlider.SetSliderValue(focusObject.transform.localEulerAngles.x);
             rotateYSlider.SetSliderValue(focusObject.transform.localEulerAngles.y);
             rotateZSlider.SetSliderValue(focusObject.transform.localEulerAngles.z);
+        }
+    }
+
+    public void setSlidersToObject(GameObject obj)
+    {
+        if (obj != null)
+        {
+            //Debug.Log(obj.transform);
+            scaleSlider.SetSliderValue(obj.transform.localScale.x);
+
+            translateXSlider.SetSliderValue(obj.transform.localPosition.x);
+            translateYSlider.SetSliderValue(obj.transform.localPosition.y);
+            translateZSlider.SetSliderValue(obj.transform.localPosition.z);
+
+            rotateXSlider.SetSliderValue(obj.transform.localEulerAngles.x);
+            rotateYSlider.SetSliderValue(obj.transform.localEulerAngles.y);
+            rotateZSlider.SetSliderValue(obj.transform.localEulerAngles.z);
         }
     }
 
@@ -91,5 +103,7 @@ public class TransformControl : MonoBehaviour {
         rotateYSlider.InitSliderRange(-180, 180, 0);
         rotateZSlider.InitSliderRange(-180, 180, 0);
     }
+
+
 
 }

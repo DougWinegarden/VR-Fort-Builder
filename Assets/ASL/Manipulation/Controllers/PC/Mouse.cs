@@ -34,9 +34,6 @@ namespace ASL.Manipulation.Controllers.PC
                     // select is for changing the material to highlight the selected object
                     fbComponent.Select();
 
-                    //transControl.resetSlidersForNewObject();
-                    transControl.isDirty = true;
-
                     if (fbComponent != previousObj)
                     {
 
