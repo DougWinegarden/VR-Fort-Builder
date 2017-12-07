@@ -6,7 +6,7 @@ namespace ASL.Manipulation.Objects
 {
     public class MoveBehavior : MonoBehaviour
     {
-        
+        private ObjectInteractionManager objManager;
         public GameObject focusObject;
         private float moveScale = 0.10f;
         private float rotateScale = 5.0f;
@@ -15,7 +15,8 @@ namespace ASL.Manipulation.Objects
 
         public virtual void Awake()
         {
-            GameObject.Find("ObjectInteractionManager").GetComponent<ObjectInteractionManager>().FocusObjectChangedEvent += SetObject;
+            objManager = GameObject.Find("ObjectInteractionManager").GetComponent<ObjectInteractionManager>();
+            objManager.FocusObjectChangedEvent += SetObject;
         }
 
         private void SetObject(ObjectSelectedEventArgs e)
@@ -184,6 +185,39 @@ namespace ASL.Manipulation.Objects
             {
                 //focusObject.destroy();
                 Destroy(focusObject);
+            }
+        }
+
+        public virtual void Copy()
+        {
+            if (focusObject != null)
+            {
+                objManager.Instantiate(focusObject.name, focusObject.transform.position, focusObject.transform.rotation);
+
+                // set focus on new object
+                //GameObject selectedObject = Mouse.Select();
+                //fortBuilderObj fbComponent = selectedObject == null ? null : selectedObject.GetComponent<fortBuilderObj>();
+                //if (fbComponent != null && fbComponent.selectable)
+                //{
+                //    objManager.RequestOwnership(selectedObject, PhotonNetwork.player.ID);
+                //    WorldManager.Selected = fbComponent;
+
+                //    // select is for changing the material to highlight the selected object
+                //    // this select function is in fortBuilderObj, while the other select 
+                //    // is in this class.
+                //    fbComponent.Select();
+
+                //    if (fbComponent != previousObj)
+                //    {
+
+                //        if (previousObj != null)
+                //        {
+                //            previousObj.Deselect();
+                //            previousObj = fbComponent;
+                //        }
+
+                //    }
+                //}
             }
         }
 

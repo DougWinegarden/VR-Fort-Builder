@@ -94,6 +94,11 @@ namespace ASL.Manipulation.Controllers.PC
                 MoveBehavior.Delete();
             }
 
+            if(Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.C))
+            {
+                MoveBehavior.Copy();
+            }
+
         }
 
         public MoveBehavior MoveBehavior
