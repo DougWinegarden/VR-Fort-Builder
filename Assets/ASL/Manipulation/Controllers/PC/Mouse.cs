@@ -47,29 +47,8 @@ namespace ASL.Manipulation.Controllers.PC
                         
                     }
                 }
-                //else
-                //{
-                //    if (previousObj != null)
-                //    {
-                //        previousObj.Deselect();
-                //        previousObj = comp;
-                //    }
-                //}
-
-               
             }
-
-                /*
-                if (Input.GetMouseButtonDown(1))
-                {
-                    //string prefabName = "Sphere";
-                    string prefabName = "FortBuilderCube";
-                    Vector3 position = new Vector3(0, 0, 2);
-                    Quaternion rotation = Quaternion.identity;
-                    objManager.Instantiate(prefabName, position, rotation);
-                }
-                */
-            }
+        }
 
         public GameObject Select()
         {

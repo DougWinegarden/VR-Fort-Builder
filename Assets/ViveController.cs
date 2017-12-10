@@ -6,9 +6,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using ASL.Manipulation.Objects;
 
 public class ViveController : MonoBehaviour
 {
+    public GameObject currentObj;
+
+    public GameObject focusObject;
+
+    private ObjectInteractionManager objManager;
+    private fortBuilderObj previousObj;
 
     private SteamVR_TrackedObject controller;
     public GameObject VR_Rig;
@@ -23,7 +30,15 @@ public class ViveController : MonoBehaviour
 
     void Awake()
     {
+        objManager = GameObject.Find("ObjectInteractionManager").GetComponent<ObjectInteractionManager>();
+        objManager.FocusObjectChangedEvent += SetObject;
+
         controller = GetComponent<SteamVR_TrackedObject>();
+    }
+
+    private void SetObject(ObjectSelectedEventArgs e)
+    {
+        focusObject = e.FocusObject;
     }
 
     // Use this for initialization
@@ -54,13 +69,18 @@ public class ViveController : MonoBehaviour
                 ShowSelectLaser(hit);
                 selectLaser.GetComponent<Renderer>().material.color = new Color(255, 0, 0);
 
-                if (hit.transform.GetComponent<fortBuilderObj>().selectable)
+                if (hit.transform.GetComponent<fortBuilderObj>())
                 {
-                    selectLaser.GetComponent<Renderer>().material.color = new Color(0, 0, 255);
+                    if (hit.transform.GetComponent<fortBuilderObj>().selectable)
+                    {
+                        selectLaser.GetComponent<Renderer>().material.color = new Color(0, 0, 255);
+                    }
                 }
+                
             }
             else
             {
+                Debug.Log("this should never happen.. I mean I added walls and everything");
                 //selectLaser.transform.up = transform.forward;
                 //selectLaser.GetComponent<Renderer>().material.color = new Color(255, 0, 0);
 
@@ -73,6 +93,51 @@ public class ViveController : MonoBehaviour
         {
             selectLaser.SetActive(false);
             selectLaser.GetComponent<Renderer>().enabled = false;
+
+            if (Controller.GetPressUp(SteamVR_Controller.ButtonMask.Trigger))
+            {
+                RaycastHit hit;
+                if (Physics.Raycast(controller.transform.position, transform.forward, out hit, 100))
+                {
+                    if (hit.transform.GetComponent<fortBuilderObj>())
+                    {
+                        if (hit.transform.GetComponent<fortBuilderObj>().selectable && hit.collider.gameObject != null)
+                        {
+
+                            GameObject selectedObject = hit.collider.gameObject;
+                            currentObj = hit.collider.gameObject;
+
+
+                            fortBuilderObj fbComponent = selectedObject.GetComponent<fortBuilderObj>();
+
+                            // recommended code by Thomas. Fixed a bug where object was unselectable
+                            if(selectedObject.GetPhotonView() != null)
+                            {
+                                selectedObject.GetPhotonView().RPC("Grab", PhotonTargets.Others);
+                            }
+                            else
+                            {
+                                objManager.RequestOwnership(selectedObject, PhotonNetwork.player.ID);
+                            }
+                            WorldManager.Selected = fbComponent;
+
+                            // changes object's color
+                            fbComponent.Select();
+
+
+                            // deselect the old object
+                            if (fbComponent != previousObj)
+                            {
+                                if (previousObj != null)
+                                {
+                                    previousObj.Deselect();
+                                    previousObj = fbComponent;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
 
 
@@ -114,6 +179,27 @@ public class ViveController : MonoBehaviour
 
             }
         }
+
+
+
+
+
+
+
+        Debug.Log(currentObj);
+        // updates the object
+        if(currentObj != null)
+        {
+            updateCurrentObj();
+        }
+        
+    }
+
+    // only happens if focusObject is not null
+    private void updateCurrentObj()
+    {
+        // matches focus object rotation to controller rotation
+        currentObj.transform.up = controller.transform.forward;
     }
 
     private void ShowTeleLaser(RaycastHit hit)
