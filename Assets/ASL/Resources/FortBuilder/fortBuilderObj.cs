@@ -35,6 +35,7 @@ public class fortBuilderObj : MonoBehaviour {
             }
             else
             {
+                Debug.Log("Player owning object not in room. Requesting ownership");
                 photonView.RequestOwnership();
             }
         }
@@ -42,16 +43,19 @@ public class fortBuilderObj : MonoBehaviour {
         if(photonView.ownerId == PhotonNetwork.player.ID)
         {
             selected = true;
-            WorldManager.Selected = this;
+            WorldManager.objManager.OnObjectSelected(gameObject, PhotonNetwork.player.ID);
             objMaterial = gameObject.GetComponent<Renderer>().material;
             gameObject.GetComponent<Renderer>().material = selectMaterial;
+        }
+        else
+        {
+            Debug.Log("Object not owned");
         }
     }
 
     public void Deselect()
     {
         selected = false;
-        if(WorldManager.Selected == this) WorldManager.Selected = null;
         gameObject.GetComponent<Renderer>().material = objMaterial;
     }
 

@@ -28,21 +28,7 @@ namespace ASL.Manipulation.Controllers.PC
                 fortBuilderObj fbComponent = selectedObject == null ? null : selectedObject.GetComponent<fortBuilderObj>();
                 if (fbComponent != null && fbComponent.selectable)
                 {
-                    if (fbComponent != previousObj)
-                    {
-
-                        if(previousObj != null)
-                        {
-                            previousObj.Deselect();
-                            previousObj = fbComponent;
-                        }
-                        
-                    }
-
-                    // select is for changing the material to highlight the selected object
-                    // this select function is in fortBuilderObj, while the other select 
-                    // is in this class.
-                    fbComponent.Select();
+                    WorldManager.Selected = fbComponent;
                 }
             }
         }
