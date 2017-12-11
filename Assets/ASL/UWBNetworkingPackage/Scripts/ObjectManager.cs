@@ -31,6 +31,15 @@ namespace UWBNetworkingPackage
             return go;
         }
 
+        public GameObject Instantiate(string prefabName, Transform basedOn)
+        {
+            GameObject go = Instantiate(prefabName);
+            go.transform.position = basedOn.position;
+            go.transform.rotation = basedOn.rotation;
+            go.transform.localScale = basedOn.localScale;
+            return go;
+        }
+
         public GameObject Instantiate(GameObject go)
         {
             if (PhotonNetwork.connectedAndReady)

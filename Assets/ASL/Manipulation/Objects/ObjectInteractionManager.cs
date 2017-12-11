@@ -96,6 +96,11 @@ namespace ASL.Manipulation.Objects
             networkManager.Instantiate(prefabName, position, rotation);
         }
 
+        public GameObject Instantiate(string prefabName, Transform basedOn)
+        {
+            return networkManager.Instantiate(prefabName, basedOn);
+        }
+
         public T RegisterBehavior<T>()
         {
             if(gameObject.GetComponent<T>() != null)

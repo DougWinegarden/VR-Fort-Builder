@@ -180,6 +180,15 @@ namespace UWBNetworkingPackage
             }
         }
 
+        public GameObject Instantiate(string prefabName, Transform basedOn)
+        {
+            if(objManager != null)
+            {
+                return objManager.Instantiate(prefabName, basedOn);
+            }
+            return null;
+        }
+
         public void RequestOwnership(GameObject obj, int focuserID)
         {
             if (obj.GetPhotonView() != null)

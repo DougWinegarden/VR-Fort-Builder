@@ -192,7 +192,7 @@ namespace ASL.Manipulation.Objects
         {
             if (focusObject != null)
             {
-                objManager.Instantiate(focusObject.name, focusObject.transform.position, focusObject.transform.rotation);
+                var newObject = objManager.Instantiate(focusObject.name, focusObject.transform);
 
                 // set focus on new object
                 //GameObject selectedObject = Mouse.Select();
