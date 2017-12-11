@@ -68,6 +68,15 @@ public class BuildDropdownBehavior : MonoBehaviour {
 			objManager.Instantiate(prefabName, position, rotation);
 		}
 
+        if (buildDropdown.value == 6)
+        {
+            //Debug.Log("spawn 1 rect prism");
+            string prefabName = "Cone";
+            Vector3 position = new Vector3(0, 1, 0);
+            Quaternion rotation = Quaternion.identity;
+            objManager.Instantiate(prefabName, position, rotation);
+        }
+
         // set it back to 0 so it only builds 1 of whatever was selected
         buildDropdown.value = 0;
 

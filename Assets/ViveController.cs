@@ -7,9 +7,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using ASL.Manipulation.Objects;
+using TMPro;
 
 public class ViveController : MonoBehaviour
 {
+    public GameObject transformModeText;
     // translate, rotate, scale
     private string transformMode = "translate";
 
@@ -81,6 +83,11 @@ public class ViveController : MonoBehaviour
                         selectLaser.GetComponent<Renderer>().material.color = new Color(0, 0, 255);
                     }
                 }
+                // or the object being pointed at is on the build board
+                else if (hit.transform.GetComponent<selectionObject>())
+                {
+                    selectLaser.GetComponent<Renderer>().material.color = new Color(0, 0, 255);
+                }
                 
             }
             else
@@ -104,6 +111,7 @@ public class ViveController : MonoBehaviour
                         if (hit.transform.GetComponent<fortBuilderObj>().selectable && hit.collider.gameObject != null)
                         {
                             isObjSelected = true;
+                            transformMode = "translate";
 
                             GameObject selectedObject = hit.collider.gameObject;
                             currentObj = hit.collider.gameObject;
@@ -137,6 +145,58 @@ public class ViveController : MonoBehaviour
                             }
                         }
                     }
+                    // or the object being selected is from the selection board
+                    else if (hit.transform.GetComponent<selectionObject>())
+                    {
+                        //isObjSelected = true;
+                        transformMode = "translate";
+
+                        if (hit.transform.gameObject.name == "Rectangular Prism")
+                        {
+                            string prefabName = "FBRectPrism1_3";
+                            Vector3 position = controller.transform.position + controller.transform.forward * 2;
+                            Quaternion rotation = Quaternion.identity;
+                            objManager.Instantiate(prefabName, position, rotation);
+                        }
+                        if (hit.transform.gameObject.name == "Cylinder")
+                        {
+                            string prefabName = "FortBuilderCylinder";
+                            Vector3 position = controller.transform.position + controller.transform.forward * 2;
+                            Quaternion rotation = Quaternion.identity;
+                            objManager.Instantiate(prefabName, position, rotation);
+                        }
+                        if (hit.transform.gameObject.name == "Cube")
+                        {
+                            string prefabName = "FortBuilderCube 1";
+                            Vector3 position = controller.transform.position + controller.transform.forward * 2;
+                            Quaternion rotation = Quaternion.identity;
+                            objManager.Instantiate(prefabName, position, rotation);
+                        }
+                        if (hit.transform.gameObject.name == "Cone")
+                        {
+                            string prefabName = "Cone";
+                            Vector3 position = controller.transform.position + controller.transform.forward * 2;
+                            Quaternion rotation = Quaternion.identity;
+                            objManager.Instantiate(prefabName, position, rotation);
+                        }
+                        if (hit.transform.gameObject.name == "Arch")
+                        {
+                            string prefabName = "Arch";
+                            Vector3 position = controller.transform.position + controller.transform.forward * 2;
+                            Quaternion rotation = Quaternion.identity;
+                            objManager.Instantiate(prefabName, position, rotation);
+                        }
+                        if (hit.transform.gameObject.name == "Prism")
+                        {
+                            string prefabName = "Prism";
+                            Vector3 position = controller.transform.position + controller.transform.forward * 2;
+                            Quaternion rotation = Quaternion.identity;
+                            objManager.Instantiate(prefabName, position, rotation);
+                        }
+
+
+
+                    }
                 }
             }
             else if(Controller.GetPressUp(SteamVR_Controller.ButtonMask.Trigger) && isObjSelected)
@@ -167,50 +227,6 @@ public class ViveController : MonoBehaviour
             }
         }
 
-        //if (Controller.GetPress(SteamVR_Controller.ButtonMask.Touchpad))
-        //{
-        //    RaycastHit hit;
-
-        //    if (Physics.Raycast(controller.transform.position, transform.forward, out hit, 100))
-        //    {
-        //        ShowTeleLaser(hit);
-        //    }
-        //    else
-        //    {
-        //        teleLaser.SetActive(false);
-        //        teleLaser.GetComponent<Renderer>().enabled = false;
-        //    }
-        //}
-        //else if (!Controller.GetPress(SteamVR_Controller.ButtonMask.Touchpad)) // 3
-        //{
-        //    teleLaser.SetActive(false);
-        //    teleLaser.GetComponent<Renderer>().enabled = false;
-        //    if (Controller.GetPressUp(SteamVR_Controller.ButtonMask.Touchpad))
-        //    {
-        //        RaycastHit hit;
-
-        //        if (Physics.Raycast(controller.transform.position, transform.forward, out hit, 100))
-        //        {
-        //            if (hit.transform.GetComponent<fortBuilderObj>())
-        //            {
-        //                var newPosition = VR_Rig.transform.position;
-
-        //                newPosition.x = hit.point.x;
-        //                newPosition.z = hit.point.z;
-
-        //                VR_Rig.transform.position = newPosition;
-        //            }
-        //        }
-
-        //    }
-        //}
-
-
-
-
-
-
-
         //Debug.Log(currentObj);
         // updates the object
         if (currentObj != null)
@@ -220,6 +236,9 @@ public class ViveController : MonoBehaviour
 
 
 
+
+        //update the transformModeText in-app
+        transformModeText.GetComponent<TextMeshPro>().SetText(transformMode);
     }
 
     // only happens if currentObject is not null
@@ -244,21 +263,6 @@ public class ViveController : MonoBehaviour
 
         
     }
-
-    //private void ShowTeleLaser(RaycastHit hit)
-    //{
-    //    Transform lzrTForm = teleLaser.transform;
-
-    //    teleLaser.SetActive(true);
-    //    teleLaser.GetComponent<Renderer>().enabled = true;
-
-    //    lzrTForm.position = Vector3.Lerp(controller.transform.position, hit.point, .5f);
-
-    //    teleLaser.transform.LookAt(hit.point);
-    //    teleLaser.transform.forward = teleLaser.transform.up;
-        
-    //    lzrTForm.localScale = new Vector3(lzrTForm.localScale.x, hit.distance / 2, lzrTForm.localScale.z);
-    //}
 
     private void ShowSelectLaser(RaycastHit hit)
     {
