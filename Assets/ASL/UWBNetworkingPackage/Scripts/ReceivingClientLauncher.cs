@@ -94,7 +94,7 @@ namespace UWBNetworkingPackage
             //    }
             //}
 
-            roomFound = PhotonNetwork.JoinRoom(RoomName);
+            roomFound = PhotonNetwork.JoinOrCreateRoom(RoomName, null, null);
 
             if (!roomFound)
             {

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using ASL.Manipulation.Objects;
 
 public class WorldManager : MonoBehaviour {
 
@@ -19,6 +20,17 @@ public class WorldManager : MonoBehaviour {
             selected = value;
             selected.Select();
         }
+    }
+
+    public static ObjectInteractionManager objManager;
+
+    private void Awake()
+    {
+        objManager = GameObject.Find("ObjectInteractionManager").GetComponent<ObjectInteractionManager>();
+        objManager.FocusObjectChangedEvent += delegate (ObjectSelectedEventArgs e)
+        {
+            ; ;
+        };
     }
 
     void Start () {

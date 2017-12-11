@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class fortBuilderObj : MonoBehaviour {
 
@@ -8,6 +9,7 @@ public class fortBuilderObj : MonoBehaviour {
 
     public bool selectable;
     public bool selected;
+    public bool check = false;
 
     private Material objMaterial;
     public Material selectMaterial;
@@ -15,24 +17,54 @@ public class fortBuilderObj : MonoBehaviour {
     void Start()
     {
         objMaterial = gameObject.GetComponent<Renderer>().material;
+        
     }
 
     void update()
     {
-
     }
 
     public void Select()
     {
-        selected = true;
-        gameObject.GetComponent<Renderer>().material = selectMaterial;
+        PhotonView photonView = gameObject.GetPhotonView();
+        if (photonView != null)
+        {
+            if (PhotonNetwork.playerList.Contains(photonView.owner))
+            {
+                photonView.RPC("GrabNotSelected", PhotonTargets.Others);
+            }
+            else
+            {
+                photonView.RequestOwnership();
+            }
+        }
 
+        if(photonView.ownerId == PhotonNetwork.player.ID)
+        {
+            selected = true;
+            WorldManager.Selected = this;
+            objMaterial = gameObject.GetComponent<Renderer>().material;
+            gameObject.GetComponent<Renderer>().material = selectMaterial;
+        }
     }
 
     public void Deselect()
     {
         selected = false;
+        if(WorldManager.Selected == this) WorldManager.Selected = null;
         gameObject.GetComponent<Renderer>().material = objMaterial;
+    }
+
+    [PunRPC]
+    void GrabNotSelected(PhotonMessageInfo info)
+    {
+        if (selected) return;
+
+        var ownableObject = gameObject.GetComponent<UWBNetworkingPackage.OwnableObject>();
+        if(ownableObject != null )
+        {
+            ownableObject.RelinquishOwnership(info.sender.ID);
+        }
     }
 
 

@@ -113,7 +113,7 @@ namespace UWBNetworkingPackage
         /// </summary>
         public override void OnConnectedToMaster()
         {
-            PhotonNetwork.CreateRoom(RoomName);
+            PhotonNetwork.JoinOrCreateRoom(RoomName, null, null);
             //foreach (PhotonPlayer player in PhotonNetwork.otherPlayers)
             //{
             //    // ERROR TESTING - MUST APPROPRIATELY GET THE NODE TYPE OF THE OTHER PLAYER (HAS TO BE SET IN CUSTOM PROPERTIES)
