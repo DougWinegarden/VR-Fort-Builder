@@ -200,6 +200,8 @@ public class ViveController : MonoBehaviour
     {
         // matches focus object rotation to controller rotation
         currentObj.transform.up = controller.transform.forward;
+
+        currentObj.transform.position = controller.transform.position + controller.transform.forward * 2;
     }
 
     private void ShowTeleLaser(RaycastHit hit)
