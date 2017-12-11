@@ -10,6 +10,11 @@ using ASL.Manipulation.Objects;
 
 public class ViveController : MonoBehaviour
 {
+    // translate, rotate, scale
+    private string transformMode = "translate";
+
+    private bool isObjSelected = false;
+
     public GameObject currentObj;
 
     public GameObject focusObject;
@@ -81,11 +86,6 @@ public class ViveController : MonoBehaviour
             else
             {
                 Debug.Log("this should never happen.. I mean I added walls and everything");
-                //selectLaser.transform.up = transform.forward;
-                //selectLaser.GetComponent<Renderer>().material.color = new Color(255, 0, 0);
-
-                //selectLaser.SetActive(false);
-                //selectLaser.GetComponent<Renderer>().enabled = false;
             }
             
         }
@@ -94,7 +94,7 @@ public class ViveController : MonoBehaviour
             selectLaser.SetActive(false);
             selectLaser.GetComponent<Renderer>().enabled = false;
 
-            if (Controller.GetPressUp(SteamVR_Controller.ButtonMask.Trigger))
+            if (Controller.GetPressUp(SteamVR_Controller.ButtonMask.Trigger) && !isObjSelected)
             {
                 RaycastHit hit;
                 if (Physics.Raycast(controller.transform.position, transform.forward, out hit, 100))
@@ -103,6 +103,7 @@ public class ViveController : MonoBehaviour
                     {
                         if (hit.transform.GetComponent<fortBuilderObj>().selectable && hit.collider.gameObject != null)
                         {
+                            isObjSelected = true;
 
                             GameObject selectedObject = hit.collider.gameObject;
                             currentObj = hit.collider.gameObject;
@@ -138,86 +139,126 @@ public class ViveController : MonoBehaviour
                     }
                 }
             }
+            else if(Controller.GetPressUp(SteamVR_Controller.ButtonMask.Trigger) && isObjSelected)
+            {
+                // deselect currentObject
+                currentObj.GetComponent<fortBuilderObj>().Deselect();
+                //previousObj = currentObj.GetComponent<fortBuilderObj>();
+
+                isObjSelected = false;
+                currentObj = null;
+            }
         }
 
-
-
-        if (Controller.GetPress(SteamVR_Controller.ButtonMask.Touchpad))
+        // pressing the touchpad on the right controller toggles transformMode
+        if (Controller.GetPressDown(SteamVR_Controller.ButtonMask.Touchpad))
         {
-            RaycastHit hit;
-
-            if (Physics.Raycast(controller.transform.position, transform.forward, out hit, 100))
+            if(transformMode == "translate")
             {
-                ShowTeleLaser(hit);
+                transformMode = "rotate";
             }
-            else
+            else if(transformMode == "rotate")
             {
-                teleLaser.SetActive(false);
-                teleLaser.GetComponent<Renderer>().enabled = false;
+                transformMode = "scale";
             }
-        }
-        else if (!Controller.GetPress(SteamVR_Controller.ButtonMask.Touchpad)) // 3
-        {
-            teleLaser.SetActive(false);
-            teleLaser.GetComponent<Renderer>().enabled = false;
-            if (Controller.GetPressUp(SteamVR_Controller.ButtonMask.Touchpad))
+            else if(transformMode == "scale")
             {
-                RaycastHit hit;
-
-                if (Physics.Raycast(controller.transform.position, transform.forward, out hit, 100))
-                {
-                    if (hit.transform.GetComponent<fortBuilderObj>())
-                    {
-                        var newPosition = VR_Rig.transform.position;
-
-                        newPosition.x = hit.point.x;
-                        newPosition.z = hit.point.z;
-
-                        VR_Rig.transform.position = newPosition;
-                    }
-                }
-
+                transformMode = "translate";
             }
         }
 
+        //if (Controller.GetPress(SteamVR_Controller.ButtonMask.Touchpad))
+        //{
+        //    RaycastHit hit;
+
+        //    if (Physics.Raycast(controller.transform.position, transform.forward, out hit, 100))
+        //    {
+        //        ShowTeleLaser(hit);
+        //    }
+        //    else
+        //    {
+        //        teleLaser.SetActive(false);
+        //        teleLaser.GetComponent<Renderer>().enabled = false;
+        //    }
+        //}
+        //else if (!Controller.GetPress(SteamVR_Controller.ButtonMask.Touchpad)) // 3
+        //{
+        //    teleLaser.SetActive(false);
+        //    teleLaser.GetComponent<Renderer>().enabled = false;
+        //    if (Controller.GetPressUp(SteamVR_Controller.ButtonMask.Touchpad))
+        //    {
+        //        RaycastHit hit;
+
+        //        if (Physics.Raycast(controller.transform.position, transform.forward, out hit, 100))
+        //        {
+        //            if (hit.transform.GetComponent<fortBuilderObj>())
+        //            {
+        //                var newPosition = VR_Rig.transform.position;
+
+        //                newPosition.x = hit.point.x;
+        //                newPosition.z = hit.point.z;
+
+        //                VR_Rig.transform.position = newPosition;
+        //            }
+        //        }
+
+        //    }
+        //}
 
 
 
 
 
 
-        Debug.Log(currentObj);
+
+        //Debug.Log(currentObj);
         // updates the object
-        if(currentObj != null)
+        if (currentObj != null)
         {
             updateCurrentObj();
         }
-        
+
+
+
     }
 
-    // only happens if focusObject is not null
+    // only happens if currentObject is not null
     private void updateCurrentObj()
     {
-        // matches focus object rotation to controller rotation
-        currentObj.transform.up = controller.transform.forward;
+        if(transformMode == "rotate")
+        {
+            // matches focus object rotation to controller rotation
+            currentObj.transform.up = controller.transform.forward;
+        }
+        else if(transformMode == "translate")
+        {
+            // puts the current selected obj in front of the controller position
+            currentObj.transform.position = controller.transform.position + controller.transform.forward * 2;
+        }
+        else if(transformMode == "scale")
+        {
+            // this one is more tricky because it requires the transforms for both controllers.
 
-        currentObj.transform.position = controller.transform.position + controller.transform.forward * 2;
-    }
-
-    private void ShowTeleLaser(RaycastHit hit)
-    {
-        Transform lzrTForm = teleLaser.transform;
-
-        teleLaser.SetActive(true);
-        teleLaser.GetComponent<Renderer>().enabled = true;
-
-        lzrTForm.position = Vector3.Lerp(controller.transform.position, hit.point, .5f);
-
-        teleLaser.transform.LookAt(hit.point);
-        teleLaser.transform.forward = teleLaser.transform.up;
         
-        lzrTForm.localScale = new Vector3(lzrTForm.localScale.x, hit.distance / 2, lzrTForm.localScale.z);
+        }
+
+        
     }
+
+    //private void ShowTeleLaser(RaycastHit hit)
+    //{
+    //    Transform lzrTForm = teleLaser.transform;
+
+    //    teleLaser.SetActive(true);
+    //    teleLaser.GetComponent<Renderer>().enabled = true;
+
+    //    lzrTForm.position = Vector3.Lerp(controller.transform.position, hit.point, .5f);
+
+    //    teleLaser.transform.LookAt(hit.point);
+    //    teleLaser.transform.forward = teleLaser.transform.up;
+        
+    //    lzrTForm.localScale = new Vector3(lzrTForm.localScale.x, hit.distance / 2, lzrTForm.localScale.z);
+    //}
 
     private void ShowSelectLaser(RaycastHit hit)
     {
