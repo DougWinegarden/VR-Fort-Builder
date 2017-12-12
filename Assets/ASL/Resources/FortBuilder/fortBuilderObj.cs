@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using UnityEngine.SceneManagement;
 
 public class fortBuilderObj : MonoBehaviour {
 
@@ -29,8 +30,23 @@ public class fortBuilderObj : MonoBehaviour {
             || this.transform.position.z >= 12 || this.transform.position.z <= -12 ||
                 this.transform.position.y <= -3)
         {
+            
 
-            Destroy(gameObject);
+            if(SceneManager.GetActiveScene().name == "Vive")
+            {
+                GameObject rightController = GameObject.Find("Controller (right)");
+                if(gameObject == rightController.GetComponent<ViveController>().currentObj)
+                {
+                    rightController.GetComponent<ViveController>().currentObj = null;
+                    rightController.GetComponent<ViveController>().isObjSelected = false;
+                }
+                Destroy(gameObject);
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
+            
         }
     }
 
