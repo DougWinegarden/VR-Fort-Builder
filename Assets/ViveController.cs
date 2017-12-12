@@ -56,7 +56,7 @@ public class ViveController : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-
+        transformMode = "translate";
     }
 
     // Update is called once per frame
@@ -118,7 +118,6 @@ public class ViveController : MonoBehaviour
                             initTranslateDist = controller.transform.position - hit.transform.position;
 
                             isObjSelected = true;
-                            transformMode = "translate";
 
                             GameObject selectedObject = hit.collider.gameObject;
                             currentObj = hit.collider.gameObject;

@@ -31,7 +31,7 @@ namespace ASL.Manipulation.Controllers.PC
                 {
                     WorldManager.Selected = fbComponent;
                 } 
-                else if(selectedObject == null && !UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject())
+                else if(fbComponent == null && !UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject())
                 {
                     WorldManager.Selected = null;
                 }
