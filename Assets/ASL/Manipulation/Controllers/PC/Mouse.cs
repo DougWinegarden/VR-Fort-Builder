@@ -17,7 +17,8 @@ namespace ASL.Manipulation.Controllers.PC
         {
             objManager = GameObject.Find("ObjectInteractionManager").GetComponent<ObjectInteractionManager>();
 
-            transControl = GameObject.Find("MainCanvas").GetComponent<TransformControl>();
+            var canvas = GameObject.Find("MainCanvas");
+            if (canvas == null) transControl = canvas.GetComponent<TransformControl>();
         }
 
         public void Update()

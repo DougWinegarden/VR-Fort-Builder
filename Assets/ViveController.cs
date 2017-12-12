@@ -126,30 +126,30 @@ public class ViveController : MonoBehaviour
 
                             fortBuilderObj fbComponent = selectedObject.GetComponent<fortBuilderObj>();
 
-                            // recommended code by Thomas. Fixed a bug where object was unselectable
-                            if(selectedObject.GetPhotonView() != null)
-                            {
-                                selectedObject.GetPhotonView().RPC("Grab", PhotonTargets.Others);
-                            }
-                            else
-                            {
-                                objManager.RequestOwnership(selectedObject, PhotonNetwork.player.ID);
-                            }
+                            //// recommended code by Thomas. Fixed a bug where object was unselectable
+                            //if(selectedObject.GetPhotonView() != null)
+                            //{
+                            //    selectedObject.GetPhotonView().RPC("Grab", PhotonTargets.Others);
+                            //}
+                            //else
+                            //{
+                            //    objManager.RequestOwnership(selectedObject, PhotonNetwork.player.ID);
+                            //}
                             WorldManager.Selected = fbComponent;
 
                             // changes object's color
-                            fbComponent.Select();
+                            //fbComponent.Select();
 
 
-                            // deselect the old object
-                            if (fbComponent != previousObj)
-                            {
-                                if (previousObj != null)
-                                {
-                                    previousObj.Deselect();
-                                    previousObj = fbComponent;
-                                }
-                            }
+                            //// deselect the old object
+                            //if (fbComponent != previousObj)
+                            //{
+                            //    if (previousObj != null)
+                            //    {
+                            //        previousObj.Deselect();
+                            //        previousObj = fbComponent;
+                            //    }
+                            //}
                         }
                     }
                     // or the object being selected is from the selection board
