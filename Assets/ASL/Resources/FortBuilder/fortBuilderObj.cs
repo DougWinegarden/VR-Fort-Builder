@@ -14,14 +14,19 @@ public class fortBuilderObj : MonoBehaviour {
     public bool check = false;
 
     private Material objMaterial;
+    private Rigidbody myRigidBody;
     public Material selectMaterial;
 
     private int? requestedPhotonView = null;
 
-    void Start()
+    private void Awake()
     {
         objMaterial = gameObject.GetComponent<Renderer>().material;
-        
+        myRigidBody = gameObject.GetComponent<Rigidbody>();
+    }
+
+    void Start()
+    {   
     }
 
     void Update()
@@ -79,6 +84,7 @@ public class fortBuilderObj : MonoBehaviour {
         WorldManager.objManager.OnObjectSelected(gameObject, PhotonNetwork.player.ID);
         objMaterial = gameObject.GetComponent<Renderer>().material;
         gameObject.GetComponent<Renderer>().material = selectMaterial;
+        myRigidBody.isKinematic = true;
     }
 
     public void OnOwnershipTransfered(object[] viewAndPlayers)
@@ -102,6 +108,7 @@ public class fortBuilderObj : MonoBehaviour {
     {
         selected = false;
         gameObject.GetComponent<Renderer>().material = objMaterial;
+        myRigidBody.isKinematic = false;
     }
 
     [PunRPC]
