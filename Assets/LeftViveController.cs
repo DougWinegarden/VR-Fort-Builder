@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class LeftViveController : MonoBehaviour {
 
-    private float launch_magnitude = 2;
+    private float launch_magnitude = 4;
     public GameObject rightController;
 
     private SteamVR_TrackedObject controller;
