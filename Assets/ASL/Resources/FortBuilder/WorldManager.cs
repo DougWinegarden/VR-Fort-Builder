@@ -18,7 +18,7 @@ public class WorldManager : MonoBehaviour {
                 _selected.Deselect();
             }
             _selected = value;
-            _selected.Select();
+            if(value != null) _selected.Select();
         }
     }
 
