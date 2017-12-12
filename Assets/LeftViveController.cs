@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class LeftViveController : MonoBehaviour {
 
-    private float launch_magnitude = 5;
+    private float launch_magnitude = 2;
     public GameObject rightController;
 
     private SteamVR_TrackedObject controller;
@@ -35,7 +35,7 @@ public class LeftViveController : MonoBehaviour {
             VR_Rig.transform.Rotate(new Vector3(0, -70 * Time.deltaTime, 0));
         }
 
-        if (Controller.GetPress(SteamVR_Controller.ButtonMask.Trigger))
+        if (Controller.GetPressDown(SteamVR_Controller.ButtonMask.Trigger))
         {
             if(rightController.GetComponent<ViveController>().currentObj != null)
             {

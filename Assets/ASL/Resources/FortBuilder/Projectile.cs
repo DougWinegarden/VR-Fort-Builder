@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour {
 
-    private float timeToLive = 1;
+    public float timeToLive = 1;
 
 	// Use this for initialization
 	void Start () {
