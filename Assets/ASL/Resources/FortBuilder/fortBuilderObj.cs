@@ -5,6 +5,7 @@ using System.Linq;
 
 public class fortBuilderObj : MonoBehaviour {
 
+    public GameObject destroyCube;
     //public GameObject directManipulator;
 
     public bool selectable;
@@ -22,11 +23,12 @@ public class fortBuilderObj : MonoBehaviour {
         
     }
 
-    void update()
+    void Update()
     {
-        if(this.transform.position.x >= 12 || this.transform.position.x <= -12
+        if (this.transform.position.x >= 12 || this.transform.position.x <= -12
             || this.transform.position.z >= 12 || this.transform.position.z <= -12 ||
-                this.transform.position.y <= -3){
+                this.transform.position.y <= -3)
+        {
 
             Destroy(gameObject);
         }
