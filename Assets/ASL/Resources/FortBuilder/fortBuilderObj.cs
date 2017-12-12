@@ -41,6 +41,7 @@ public class fortBuilderObj : MonoBehaviour {
                     rightController.GetComponent<ViveController>().isObjSelected = false;
                 }
             }
+            if (WorldManager.Selected == this) WorldManager.Selected = null;
             Destroy(gameObject);
 
         }
