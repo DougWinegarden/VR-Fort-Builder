@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour {
 
-    private float timeToLive = 5;
+    private float timeToLive = 1;
 
 	// Use this for initialization
 	void Start () {
@@ -14,6 +14,9 @@ public class Projectile : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         timeToLive -= Time.deltaTime;
-        if (timeToLive <= 0) Destroy(gameObject);
+        if (timeToLive <= 0)
+        { }
+            Destroy(gameObject);
+        }
 	}
 }
