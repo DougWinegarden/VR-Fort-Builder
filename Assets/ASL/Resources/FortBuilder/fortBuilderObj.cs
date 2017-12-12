@@ -40,13 +40,9 @@ public class fortBuilderObj : MonoBehaviour {
                     rightController.GetComponent<ViveController>().currentObj = null;
                     rightController.GetComponent<ViveController>().isObjSelected = false;
                 }
-                Destroy(gameObject);
             }
-            else
-            {
-                Destroy(gameObject);
-            }
-            
+            Destroy(gameObject);
+
         }
     }
 
