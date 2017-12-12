@@ -11,11 +11,16 @@ using TMPro;
 
 public class ViveController : MonoBehaviour
 {
+    private Vector3 initTranslateDist;
+
+    private float? initScaleDistance;
+    public Transform leftController;
+
     public GameObject transformModeText;
     // translate, rotate, scale
     private string transformMode = "translate";
 
-    private bool isObjSelected = false;
+    public bool isObjSelected = false;
 
     public GameObject currentObj;
 
@@ -110,6 +115,8 @@ public class ViveController : MonoBehaviour
                     {
                         if (hit.transform.GetComponent<fortBuilderObj>().selectable && hit.collider.gameObject != null)
                         {
+                            initTranslateDist = controller.transform.position - hit.transform.position;
+
                             isObjSelected = true;
                             transformMode = "translate";
 
@@ -213,6 +220,7 @@ public class ViveController : MonoBehaviour
         // pressing the touchpad on the right controller toggles transformMode
         if (Controller.GetPressDown(SteamVR_Controller.ButtonMask.Touchpad))
         {
+            initScaleDistance = null;
             if(transformMode == "translate")
             {
                 transformMode = "rotate";
@@ -220,6 +228,10 @@ public class ViveController : MonoBehaviour
             else if(transformMode == "rotate")
             {
                 transformMode = "scale";
+                Vector3 controllerVect = controller.transform.position - leftController.position;
+                var controllerDist = controllerVect.magnitude;
+                initScaleDistance = controllerDist;
+
             }
             else if(transformMode == "scale")
             {
@@ -252,12 +264,24 @@ public class ViveController : MonoBehaviour
         else if(transformMode == "translate")
         {
             // puts the current selected obj in front of the controller position
-            currentObj.transform.position = controller.transform.position + controller.transform.forward * 2;
+            
+            currentObj.transform.position = controller.transform.position + controller.transform.forward * initTranslateDist.magnitude;
+                //new Vector3(0, 0, initTranslateDist.magnitude);
         }
         else if(transformMode == "scale")
         {
             // this one is more tricky because it requires the transforms for both controllers.
 
+            if (initScaleDistance == null) return; ; ; ;
+            Vector3 controllerVect = controller.transform.position - leftController.position;
+            float controllerDist = controllerVect.magnitude;
+            float newScale = controllerDist - (float)initScaleDistance + currentObj.transform.localScale.x;
+
+            if(newScale >= 0.5 && newScale <= 4)
+            {
+                currentObj.transform.localScale = new Vector3(newScale, newScale, newScale);
+            }
+            
         
         }
 
