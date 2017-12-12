@@ -45,6 +45,7 @@ public class LeftViveController : MonoBehaviour {
             }
             else {
                 GameObject proj = WorldManager.objManager.Instantiate("Projectile");
+                proj.transform.position = controller.transform.position;
                 proj.GetComponent<Rigidbody>().AddForce(controller.transform.forward.normalized * launch_magnitude);
             }
             
