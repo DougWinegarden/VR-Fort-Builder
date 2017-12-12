@@ -164,20 +164,22 @@ namespace UWBNetworkingPackage
             }
         }
 
-        public void Instantiate(string prefabName)
+        public GameObject Instantiate(string prefabName)
         {
             if(objManager != null)
             {
-                objManager.Instantiate(prefabName);
+                return objManager.Instantiate(prefabName);
             }
+            return null;
         }
 
-        public void Instantiate(string prefabName, Vector3 position, Quaternion rotation)
+        public GameObject Instantiate(string prefabName, Vector3 position, Quaternion rotation)
         {
             if(objManager != null)
             {
-                objManager.Instantiate(prefabName, position, rotation);
+                return objManager.Instantiate(prefabName, position, rotation);
             }
+            return null;
         }
 
         public GameObject Instantiate(string prefabName, Transform basedOn)

@@ -86,14 +86,14 @@ namespace ASL.Manipulation.Objects
             networkManager.Instantiate(go);
         }
 
-        public void Instantiate(string prefabName)
+        public GameObject Instantiate(string prefabName)
         {
-            networkManager.Instantiate(prefabName);
+            return networkManager.Instantiate(prefabName);
         }
 
-        public void Instantiate(string prefabName, Vector3 position, Quaternion rotation)
+        public GameObject Instantiate(string prefabName, Vector3 position, Quaternion rotation)
         {
-            networkManager.Instantiate(prefabName, position, rotation);
+            return networkManager.Instantiate(prefabName, position, rotation);
         }
 
         public GameObject Instantiate(string prefabName, Transform basedOn)

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class LeftViveController : MonoBehaviour {
 
+    private float launch_magnitude = 5;
     public GameObject rightController;
 
     private SteamVR_TrackedObject controller;
@@ -41,6 +42,10 @@ public class LeftViveController : MonoBehaviour {
                 Destroy(rightController.GetComponent<ViveController>().currentObj);
                 rightController.GetComponent<ViveController>().currentObj = null;
                 rightController.GetComponent<ViveController>().isObjSelected = false;
+            }
+            else {
+                GameObject proj = WorldManager.objManager.Instantiate("Projectile");
+                proj.GetComponent<Rigidbody>().AddForce(controller.transform.forward.normalized * launch_magnitude);
             }
             
         }
