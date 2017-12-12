@@ -107,7 +107,7 @@ MeshCollider:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1498734815137018}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 9cd2254070713424daf2350262d66bbb, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -663,6 +663,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9a5d94d65da2d1439960ce6511bab63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  destroyCube: {fileID: 0}
   selectable: 1
   selected: 0
   check: 0
