@@ -52,13 +52,13 @@ namespace ASL.Manipulation.Controllers.PC
 
         public GameObject Select()
         {
-            Camera cam = GameObject.FindObjectOfType<Camera>();
+            Camera cam = Camera.main;
             Vector3 mousePos = Input.mousePosition;
             Vector3 mouseRay = cam.ScreenToWorldPoint(mousePos);
             RaycastHit hit;
             Physics.Raycast(cam.ScreenPointToRay(mousePos), out hit);
 
-            if (hit.collider != null)
+            if (hit.collider != null && !UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject())
             {
                 return hit.collider.gameObject;
             }
