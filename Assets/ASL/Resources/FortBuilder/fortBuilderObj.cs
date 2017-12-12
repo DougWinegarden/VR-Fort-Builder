@@ -24,6 +24,12 @@ public class fortBuilderObj : MonoBehaviour {
 
     void update()
     {
+        if(this.transform.position.x >= 12 || this.transform.position.x <= -12
+            || this.transform.position.z >= 12 || this.transform.position.z <= -12 ||
+                this.transform.position.y <= -3){
+
+            Destroy(gameObject);
+        }
     }
 
     public void Select()

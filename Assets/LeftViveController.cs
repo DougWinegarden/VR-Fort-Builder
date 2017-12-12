@@ -71,12 +71,15 @@ public class LeftViveController : MonoBehaviour {
                 {
                     if (hit.transform.GetComponent<fortBuilderObj>())
                     {
-                        var newPosition = VR_Rig.transform.position;
+                        if (!hit.transform.GetComponent<fortBuilderObj>().selectable)
+                        {
+                            var newPosition = VR_Rig.transform.position;
 
-                        newPosition.x = hit.point.x;
-                        newPosition.z = hit.point.z;
+                            newPosition.x = hit.point.x;
+                            newPosition.z = hit.point.z;
 
-                        VR_Rig.transform.position = newPosition;
+                            VR_Rig.transform.position = newPosition;
+                        }
                     }
                 }
 
