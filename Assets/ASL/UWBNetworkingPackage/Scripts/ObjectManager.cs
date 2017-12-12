@@ -25,6 +25,7 @@ namespace UWBNetworkingPackage
         public GameObject Instantiate(string prefabName, Vector3 position, Quaternion rotation)
         {
             GameObject go = Instantiate(prefabName);
+            Debug.Log(go.ToString());
             go.transform.position = position;
             go.transform.rotation = rotation;
 
