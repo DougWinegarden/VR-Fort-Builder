@@ -58,4 +58,5 @@ MonoBehaviour:
   - SpawnNetworkObject
   - StressTestRemote
   - TaggedPlayer
+  - GrabNotSelected
   DisableAutoOpenWizard: 1

@@ -21,7 +21,7 @@ namespace ASL.Manipulation.Objects
             OnObjectSelected(obj, focuserID);
         }
 
-        protected void OnObjectSelected(GameObject obj, int focuserID)
+        public void OnObjectSelected(GameObject obj, int focuserID)
         {
             //Debug.Log("About to trigger On Object Selected event");
             if (obj != null)

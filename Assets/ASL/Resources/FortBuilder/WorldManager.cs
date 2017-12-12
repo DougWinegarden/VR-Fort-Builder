@@ -1,24 +1,32 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using ASL.Manipulation.Objects;
 
 public class WorldManager : MonoBehaviour {
 
-    private static fortBuilderObj selected = null;
+    private static fortBuilderObj _selected = null;
 
     public static fortBuilderObj Selected {
         get {
-            return selected;
+            return _selected;
         }
 
         set {
-            if(selected != null)
+            if(_selected != null)
             {
-                selected.Deselect();
+                _selected.Deselect();
             }
-            selected = value;
-            selected.Select();
+            _selected = value;
+            _selected.Select();
         }
+    }
+
+    public static ObjectInteractionManager objManager;
+
+    private void Awake()
+    {
+        objManager = GameObject.Find("ObjectInteractionManager").GetComponent<ObjectInteractionManager>();
     }
 
     void Start () {

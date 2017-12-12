@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class fortBuilderObj : MonoBehaviour {
 
@@ -8,31 +9,90 @@ public class fortBuilderObj : MonoBehaviour {
 
     public bool selectable;
     public bool selected;
+    public bool check = false;
 
     private Material objMaterial;
     public Material selectMaterial;
 
+    private int? requestedPhotonView = null;
+
     void Start()
     {
         objMaterial = gameObject.GetComponent<Renderer>().material;
+        
     }
 
     void update()
     {
-
     }
 
     public void Select()
     {
-        selected = true;
-        gameObject.GetComponent<Renderer>().material = selectMaterial;
+        if (gameObject.GetPhotonView().ownerId == PhotonNetwork.player.ID)
+        {
+            setAsSelected();
+        }
+        else
+        {
+            PhotonView photonView = gameObject.GetPhotonView();
+            requestedPhotonView = photonView.viewID;
+            if (photonView != null)
+            {
+                if (PhotonNetwork.playerList.Contains(photonView.owner))
+                {
+                    photonView.RPC("GrabNotSelected", PhotonTargets.Others);
+                }
+                else
+                {
+                    Debug.Log("Player owning object not in room. Requesting ownership");
+                    photonView.RequestOwnership();
+                }
+            }
 
+        }
+    }
+
+    private void setAsSelected()
+    {
+        selected = true;
+        WorldManager.objManager.OnObjectSelected(gameObject, PhotonNetwork.player.ID);
+        objMaterial = gameObject.GetComponent<Renderer>().material;
+        gameObject.GetComponent<Renderer>().material = selectMaterial;
+    }
+
+    public void OnOwnershipTransfered(object[] viewAndPlayers)
+    {
+        PhotonView view = viewAndPlayers[0] as PhotonView;
+
+        PhotonPlayer newOwner = viewAndPlayers[1] as PhotonPlayer;
+
+        PhotonPlayer oldOwner = viewAndPlayers[2] as PhotonPlayer;
+
+        if(requestedPhotonView != null && requestedPhotonView == view.viewID && newOwner.ID == PhotonNetwork.player.ID)
+        {
+            requestedPhotonView = null;
+            setAsSelected();
+        }
+
+        Debug.Log("OnOwnershipTransfered for PhotonView" + view.ToString() + " from " + oldOwner + " to " + newOwner);
     }
 
     public void Deselect()
     {
         selected = false;
         gameObject.GetComponent<Renderer>().material = objMaterial;
+    }
+
+    [PunRPC]
+    void GrabNotSelected(PhotonMessageInfo info)
+    {
+        if (selected) return;
+
+        var ownableObject = gameObject.GetComponent<UWBNetworkingPackage.OwnableObject>();
+        if(ownableObject != null )
+        {
+            ownableObject.RelinquishOwnership(info.sender.ID);
+        }
     }
 
 
