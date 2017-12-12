@@ -251,6 +251,11 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 114287312513674772, guid: 4acb2fb6a5dd4c04e829e8c9fc0f8865,
+        type: 2}
+      propertyPath: m_Options.m_Options.Array.size
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 224224594770442230, guid: 4acb2fb6a5dd4c04e829e8c9fc0f8865,
         type: 2}
       propertyPath: m_LocalPosition.x
@@ -711,6 +716,11 @@ Prefab:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114287312513674772, guid: 4acb2fb6a5dd4c04e829e8c9fc0f8865,
+        type: 2}
+      propertyPath: m_Options.m_Options.Array.data[6].m_Text
+      value: Cone
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4acb2fb6a5dd4c04e829e8c9fc0f8865, type: 2}
   m_IsPrefabParent: 0
@@ -766,7 +776,7 @@ Prefab:
     - target: {fileID: 114957353675975594, guid: 1fd86e20e09ce1542ae7438d85efb80b,
         type: 2}
       propertyPath: MasterClient
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 1fd86e20e09ce1542ae7438d85efb80b, type: 2}

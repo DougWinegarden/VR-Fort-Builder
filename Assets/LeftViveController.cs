@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class LeftViveController : MonoBehaviour {
 
+    public GameObject rightController;
+
     private SteamVR_TrackedObject controller;
     public GameObject VR_Rig;
     public GameObject teleLaser;
@@ -30,6 +32,17 @@ public class LeftViveController : MonoBehaviour {
         {
             //Debug.Log("Right Controller Grip Pressed");
             VR_Rig.transform.Rotate(new Vector3(0, -70 * Time.deltaTime, 0));
+        }
+
+        if (Controller.GetPress(SteamVR_Controller.ButtonMask.Trigger))
+        {
+            if(rightController.GetComponent<ViveController>().currentObj != null)
+            {
+                Destroy(rightController.GetComponent<ViveController>().currentObj);
+                rightController.GetComponent<ViveController>().currentObj = null;
+                rightController.GetComponent<ViveController>().isObjSelected = false;
+            }
+            
         }
 
         if (Controller.GetPress(SteamVR_Controller.ButtonMask.Touchpad))
