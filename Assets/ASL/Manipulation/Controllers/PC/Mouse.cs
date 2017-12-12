@@ -30,6 +30,10 @@ namespace ASL.Manipulation.Controllers.PC
                 if (fbComponent != null && fbComponent.selectable)
                 {
                     WorldManager.Selected = fbComponent;
+                } 
+                else if(selectedObject == null && !UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject())
+                {
+                    WorldManager.Selected = null;
                 }
             }
         }
